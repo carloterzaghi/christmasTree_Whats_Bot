@@ -1,4 +1,6 @@
-def comando_musica(enviado,lista_playlist):
+from main import lista_playlist
+
+def comando_musica(enviado):
     if enviado == 'som':
         return
     elif enviado == 'playlist':
