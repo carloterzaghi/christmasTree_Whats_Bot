@@ -14,7 +14,16 @@ def index():
 @app.route("/sms", methods=["POST"])
 def sms_reply():
     # Lista de comandos + Teste da Placa
-    lista_comandos = ["ligar", "desligar", "musicas", "playlist", "add", "skip", "play", "cancel"]
+    lista_comandos = [
+        "ligar",
+        "desligar",
+        "musicas",
+        "playlist",
+        "add",
+        "skip",
+        "play",
+        "cancel",
+    ]
     placa_teste = False
 
     # Mensagens Whats

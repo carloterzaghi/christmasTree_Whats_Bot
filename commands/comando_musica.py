@@ -25,31 +25,39 @@ def init_musics(db):
                         pass
                 else:
                     if doc.to_dict()[i] == "":
-                        db.collection("Playlist").document("tocando").update({"tocando": "Nada"})
+                        db.collection("Playlist").document("tocando").update(
+                            {"tocando": "Nada"}
+                        )
                     else:
-                        db.collection("Playlist").document("tocando").update({"tocando": tocando})
+                        db.collection("Playlist").document("tocando").update(
+                            {"tocando": tocando}
+                        )
                         db.collection("Playlist").document("list").set(musicas)
         try:
             for fileName in os.listdir(r"./Musicas"):
                 if fileName[0:2] == (
-                    "0" + str(int(tocando)) if len(str(int(tocando))) == 1 else str(int(tocando))
+                    "0" + str(int(tocando))
+                    if len(str(int(tocando))) == 1
+                    else str(int(tocando))
                 ):
                     play_music(fileName)
         except:
             music = random.choice(os.listdir(r"./Musicas"))
-            db.collection("Playlist").document("tocando").update({"tocando": music[0:2]})
+            db.collection("Playlist").document("tocando").update(
+                {"tocando": music[0:2]}
+            )
             play_music(music)
+
 
 # Função que toca a musica
 def play_music(musica):
     pygame.init()
     pygame.mixer.init()
     clock = pygame.time.Clock()
-    pygame.mixer.music.load(f'Musicas/{musica}')
+    pygame.mixer.music.load(f"Musicas/{musica}")
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
         clock.tick(1000)
-
 
 
 def comando_musica(enviado):
@@ -64,7 +72,7 @@ def comando_musica(enviado):
     if enviado == "musicas":
         musicas = ""
         for fileName in os.listdir(r"./Musicas"):
-            musicas += f'\n{fileName[0:2]}° ➤ *{fileName[5:-4]}*'
+            musicas += f"\n{fileName[0:2]}° ➤ *{fileName[5:-4]}*"
         return f"Como usar:\n*Add <N° da Música>*\n\nMúsicas: {musicas}"
     # Retorna a Playlist
     elif enviado == "playlist":
@@ -124,7 +132,7 @@ def comando_musica(enviado):
         for doc in db.collection("Playlist").get():
             for i in doc.to_dict():
                 if doc.to_dict()[i] == "Nada":
-                    threading.Thread(target= init_musics, args= [db]).start()
+                    threading.Thread(target=init_musics, args=[db]).start()
                     return "Tocando a Playlist."
         return "Playlist já está sendo tocada."
     # Parar tudo
