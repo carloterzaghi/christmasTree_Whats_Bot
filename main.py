@@ -2,8 +2,11 @@ from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from commands.comando_placa import comando_ligar_Placa
 from commands.comando_musica import comando_musica
+from layout import layout
+import threading
 
 app = Flask(__name__)
+threading.Thread(target=layout).start()
 
 
 @app.route("/")
